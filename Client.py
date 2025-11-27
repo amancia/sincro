@@ -47,7 +47,6 @@ class Client:
         while True:
             delta = float(self.server.recv(1024).decode())
         
-            # if (delta > 0):
             self.current_time += datetime.timedelta(seconds=delta)
             self.times.append(self.current_time)
         

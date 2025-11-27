@@ -68,4 +68,4 @@ async function load() {
     }
 }
 
-setInterval(load, 1000);
+setInterval(load, 1025);
