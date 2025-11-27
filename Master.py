@@ -57,7 +57,7 @@ class Master:
                                         "time_difference": clock_time_diff
                                     }
             
-            # time.sleep(1)
+            time.sleep(1)
 
 
     # Sincronização

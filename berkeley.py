@@ -1,7 +1,7 @@
 ################################################################################
 
 import datetime as dt
-import threading, random
+import threading, random, statistics
 
 from Master import Master
 from Client import Client
@@ -30,13 +30,17 @@ def home():
 def state():
     time = dt.datetime.now();
     date = dt.datetime(time.year, time.month, time.day)
+    step = statistics.mode([len(client.times) for client in master.clients]) - 1
 
-    return jsonify([{
-        'idx': client.idx,
-        'time': (client.current_time - date).total_seconds(),
-        'diffs': client.diffs,
-        'speed': client.speed,
-    } for client in master.clients])
+    return jsonify({
+        'step': step,
+        'clocks': [{
+            'idx': client.idx,
+            'time': (client.times[step] - date).total_seconds(),
+            'diffs': client.diffs,
+            'speed': client.speed,
+        } for client in master.clients],
+    })
 
 @app.route("/skew/<int:idx>")
 def clock_skew(idx:int):

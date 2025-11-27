@@ -13,6 +13,8 @@ class Client:
         self.diffs = diffs
         self.speed = speed
 
+        self.times:list[datetime.datetime] = []
+
         self.server = socket.socket()
         self.server.connect(('127.0.0.1', port))
         print('OKAY: Cliente conectado.')
@@ -29,12 +31,13 @@ class Client:
         self.diffs = random.random()
     
     def driftRate(self):
-        self.speed = random.random()
+        self.speed = 2 * random.random()
     
     def sendTime(self):
         while True:
             increment = datetime.datetime.now() - self.current_time
             self.current_time += increment * self.speed + datetime.timedelta(seconds=self.diffs)
+            self.times.append(self.current_time)
 
             self.server.send(str(self.current_time).encode())
             print('INFO: Horas enviadas:', self.current_time)
@@ -46,8 +49,9 @@ class Client:
         
             # if (delta > 0):
             self.current_time += datetime.timedelta(seconds=delta)
+            self.times.append(self.current_time)
         
             print('INFO: Horas sincronizadas:', self.current_time)
-            # time.sleep(0.5)
+            time.sleep(0.125)
 
 ################################################################################
