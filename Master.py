@@ -8,7 +8,7 @@ import threading, datetime, dateutil, socket, time
 
 class Master:
     def __init__(self, port:int, clients:list[Client]):
-        self.tolerance = 1
+        self.tolerance = 1000 / 1000
         self.current_time = datetime.datetime.now()
         print('OKAY: Referências de tempos registradas.')
         
@@ -72,7 +72,6 @@ class Master:
                 self.current_time += datetime.timedelta(seconds=average_diff)
                 
                 print('master:realtime', datetime.datetime.now(), '-'*30)
-                print('master:averaged', average_diff)
 
                 for client_addr, client in self.clientLogs.items():
                     try:
@@ -96,7 +95,7 @@ class Master:
                 average_diff = sum(filtered_client_diffs) / len(filtered_client_diffs)
                 return average_diff
             else:
-                return sum(client_diffs) / len(client_diffs)
+                return 0
         else:
             return 0
 

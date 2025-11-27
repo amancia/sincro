@@ -1,7 +1,6 @@
 ################################################################################
 
-import datetime as dt
-import threading, random, statistics
+import statistics, datetime as dt
 
 from Master import Master
 from Client import Client
@@ -23,9 +22,9 @@ for idx in range(8): clients.append(Client(idx, port))
 ################################################################################
 
 @app.route("/")
-def home():
-    return render_template("berkeley.html")
+def home(): return render_template("berkeley.html")
 
+# Gera dados de cada iteração
 @app.route("/state")
 def state():
     time = dt.datetime.now();
